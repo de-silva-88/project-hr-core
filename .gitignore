@@ -1,0 +1,15 @@
+.settings
+.project
+.settings/
+project-hr-api/.classpath
+project-hr-api/.project
+project-hr-api/.settings
+project-hr-api/target
+project-hr-data/.classpath
+project-hr-data/.project
+project-hr-data/.settings
+project-hr-data/target
+project-hr-service/.classpath
+project-hr-service/.project
+project-hr-service/.settings
+project-hr-service/target
