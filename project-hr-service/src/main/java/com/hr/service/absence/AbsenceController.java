@@ -1,11 +1,10 @@
-package com.hr.service.service.impl;
+package com.hr.service.absence;
 
 import com.hr.api.domain.Employee;
-import com.hr.service.service.AbsenceService;
+import com.hr.service.absence.AbsenceController;
 
-public class AbsenceServiceImpl implements AbsenceService {
+public class AbsenceController {
 
-	@Override
 	public Employee getLeavesLeftForEmployee(int id) {
 		Employee emp = new Employee();
 		emp.setActive(true);
