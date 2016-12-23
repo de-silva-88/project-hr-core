@@ -5,19 +5,18 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MySQLConn implements Closeable {
 
     public Connection getConnection(){
         try {
-            Class.forName(
-                    System.getProperty("jdbc.driver")
-            ).newInstance();
-            return DriverManager.getConnection(
-                    System.getProperty("jdbc.url"),
-                    System.getProperty("jdbc.user"),
-                    System.getProperty("jdbc.password"));
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hrdb_shared", "root", "root");
+        } catch (SQLException | InstantiationException | ClassNotFoundException | IllegalAccessException e) {
             e.printStackTrace(); // for tutorial's sake ;)
         }
         return null;
@@ -25,6 +24,6 @@ public class MySQLConn implements Closeable {
 
     @Override
     public void close() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        log.warn("CLOSE FOR THE MYSQL GET CONNECTION IS NOT YET IMPLEMENTED..");
     }
 }
