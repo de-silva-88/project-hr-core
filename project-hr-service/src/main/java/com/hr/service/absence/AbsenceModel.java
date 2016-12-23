@@ -1,6 +1,6 @@
 package com.hr.service.absence;
 
-import com.hr.tables.pojos.Employee;
+import com.hr.jooq.tables.pojos.Employee;
 import java.util.List;
 
 public class AbsenceModel {

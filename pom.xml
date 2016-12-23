@@ -38,7 +38,8 @@
         <log4j.version>1.2.16</log4j.version>
         <mysql.version>5.1.30</mysql.version>
         <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-        <gen.sources.dir>target/generated-sources/jooq</gen.sources.dir>
+        <gen.sources.dir>target/generated-sources/java</gen.sources.dir>
+        <jooq.pkg>com.hr.jooq</jooq.pkg>
     </properties>
 
     <dependencyManagement>
@@ -238,7 +239,7 @@
                             <pojos>true</pojos>
                         </generate>
                         <target>
-                            <packageName>com.hr</packageName>
+                            <packageName>${jooq.pkg}</packageName>
                             <directory>${gen.sources.dir}</directory>
                         </target>
                     </generator>

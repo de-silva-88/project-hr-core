@@ -1,8 +1,8 @@
 package com.hr.service.absence;
 
+import static com.hr.jooq.tables.Employee.EMPLOYEE;
+import com.hr.jooq.tables.pojos.Employee;
 import com.hr.service.dao.MySQLConn;
-import static com.hr.tables.Employee.EMPLOYEE;
-import com.hr.tables.pojos.Employee;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

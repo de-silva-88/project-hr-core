@@ -1,6 +1,6 @@
 package com.hr.service.absence;
 
-import com.hr.api.domain.Employee;
+import com.hr.jooq.tables.pojos.Employee;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -27,7 +27,7 @@ public class AbsenceResource {
     public Response getLeavesLeftByEmpId(@PathParam("id") String idStr) {
         log.info("Invoked get-leaves-left-by-id service with param --> id : {}", idStr);
         int id = Integer.parseInt(idStr);
-        List<com.hr.tables.pojos.Employee> emp = abCtrl.getLeavesLeft();
+        List<Employee> emp = abCtrl.getLeavesLeft();
         return Response.status(Response.Status.OK).entity(emp).build();
     }
 //
