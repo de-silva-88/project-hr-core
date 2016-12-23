@@ -14,17 +14,50 @@
         <module>project-hr-data</module>
         <module>project-hr-service</module>
     </modules>
-
+    
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jdbc.user>root</jdbc.user>
+                <jdbc.password>root</jdbc.password>
+                <jdbc.url>jdbc:mysql://localhost:3306/hrdb_shared</jdbc.url>
+                <jdbc.database.name>hrdb_shared</jdbc.database.name>
+            </properties>
+        </profile>
+    </profiles>
+    
     <properties>
         <springframework.version>4.2.0.RELEASE</springframework.version>
         <jackson.version>2.8.1</jackson.version>
         <lombok.version>1.16.10</lombok.version>
         <slf4j.version>1.7.21</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
+        <mysql.version>6.0.5</mysql.version>
+        <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+        <gen.sources.dir>service/src/generated-sources/jooq</gen.sources.dir>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq</artifactId>
+                <version>3.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen</artifactId>
+                <version>3.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -49,7 +82,7 @@
                 <artifactId>jersey-container-servlet</artifactId>
                 <version>2.25</version>
             </dependency>
-<!--            <dependency>
+            <!--            <dependency>
                 <groupId>com.fasterxml.jackson.jaxrs</groupId>
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
                 <version>2.2.3</version>
@@ -104,8 +137,20 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- <dependencies> -->
-    <!-- </dependencies> -->
+    <dependencies> 
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies> 
 
     <build>
         <pluginManagement>
@@ -155,8 +200,68 @@
                     </httpConnector>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>3.3.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <jdbc>
+                        <driver>${jdbc.driver}</driver>
+                        <url>${jdbc.url}</url>
+                        <user>${jdbc.user}</user>
+                        <password>${jdbc.password}</password>
+                    </jdbc>
+                    <generator>
+                        <name>org.jooq.util.DefaultGenerator</name>
+                        <database>
+                            <name>org.jooq.util.mysql.MySQLDatabase</name>
+                            <includes>.*</includes>
+                            <excludes></excludes>
+                            <inputSchema>${jdbc.database.name}</inputSchema>
+                        </database>
+                        <generate>
+                            <deprecated>false</deprecated>
+                        </generate>
+                        <target>
+                            <packageName>com.hr</packageName>
+                            <directory>${gen.sources.dir}</directory>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${gen.sources.dir}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-
     </build>
-
 </project>
