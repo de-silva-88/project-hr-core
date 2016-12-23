@@ -3,16 +3,16 @@ package com.hr.service.absence;
 import com.hr.tables.pojos.Employee;
 import java.util.List;
 
-public class AbsenceController {
+public class AbsenceModel {
 
-    private AbsenceModel abMod;
+    private AbsenceDAO abDAO;
 
     {
-        abMod = new AbsenceModel();
+        abDAO = new AbsenceDAO();
     }
-
+    
     public List<Employee> getLeavesLeft() {
-        List<Employee> leavesLeftByEmpId = abMod.getLeavesLeft();
+        List<Employee> leavesLeftByEmpId = abDAO.getLeavesLeftByEmpId();
         return leavesLeftByEmpId;
     }
 }

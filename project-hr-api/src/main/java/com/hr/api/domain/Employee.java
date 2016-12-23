@@ -8,9 +8,9 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Employee {
-	
-	private int id;
-	private String fname;
-	private String lname;
-	private boolean isActive;
+
+    private int id;
+    private String fname;
+    private String lname;
+    private boolean isActive;
 }
