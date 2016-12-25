@@ -1,5 +1,6 @@
 package com.hr.service.absence;
 
+import com.hr.api.domain.LeavesAppliedBasic;
 import com.hr.api.domain.LeavesLeftBasic;
 import com.hr.jooq.tables.pojos.Employee;
 import java.util.List;
@@ -12,7 +13,13 @@ public class AbsenceController {
 
     public List<LeavesLeftBasic> getLeavesLeft(String empIdStr) {
         int empId = Integer.parseInt(empIdStr);
-        List<LeavesLeftBasic> leavesLeftByEmpId = model.getLeavesLeft(empId);
-        return leavesLeftByEmpId;
+        List<LeavesLeftBasic> leavesLeft = model.getLeavesLeft(empId);
+        return leavesLeft;
+    }
+    
+    public List<LeavesAppliedBasic> getLeavesApplied(String empIdStr) {
+        int empId = Integer.parseInt(empIdStr);
+        List<LeavesAppliedBasic> leavesApplied = model.getLeavesApplied(empId);
+        return leavesApplied;
     }
 }

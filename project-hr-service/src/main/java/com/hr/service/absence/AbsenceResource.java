@@ -1,5 +1,6 @@
 package com.hr.service.absence;
 
+import com.hr.api.domain.LeavesAppliedBasic;
 import com.hr.api.domain.LeavesLeftBasic;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -32,5 +33,16 @@ public class AbsenceResource {
         if(!validated) return Response.status(Response.Status.BAD_REQUEST).build();
         List<LeavesLeftBasic> leavesLeft = controller.getLeavesLeft(idStr);
         return Response.status(Response.Status.OK).entity(leavesLeft).build();
+    }
+    
+    @GET
+    @Path("/leaves/applied/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLeavesAppliedByEmpId(@PathParam("id") String idStr) {
+        log.info("Invoked get-leaves-left-by-id service with param --> id : {}", idStr);
+        boolean validated = validator.validateGetLeavesAppliedService(idStr);
+        if(!validated) return Response.status(Response.Status.BAD_REQUEST).build();
+        List<LeavesAppliedBasic> leavesApplied = controller.getLeavesApplied(idStr);
+        return Response.status(Response.Status.OK).entity(leavesApplied).build();
     }
 }
