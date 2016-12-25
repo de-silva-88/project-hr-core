@@ -1,4 +1,4 @@
-package com.hr.service.dao;
+package com.hr.data.db;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -11,11 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MySQLConn implements Closeable {
+    private Connection connection;
 
     public Connection getConnection(){
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hrdb_shared", "root", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hrdb_shared", "root", "root");
+            return connection;
         } catch (SQLException | InstantiationException | ClassNotFoundException | IllegalAccessException e) {
             e.printStackTrace(); // for tutorial's sake ;)
         }
@@ -24,6 +26,12 @@ public class MySQLConn implements Closeable {
 
     @Override
     public void close() throws IOException {
-        log.warn("CLOSE FOR THE MYSQL GET CONNECTION IS NOT YET IMPLEMENTED..");
+        try {
+            log.info("Closing mysql connection...");
+            connection.close();
+        } catch (SQLException ex) {
+            log.info("Error closing mysql conneciton. Refer to the stack trace.");
+            ex.printStackTrace();
+        }
     }
 }

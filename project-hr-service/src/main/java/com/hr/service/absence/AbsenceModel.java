@@ -1,18 +1,18 @@
 package com.hr.service.absence;
 
-import com.hr.jooq.tables.pojos.Employee;
+import com.hr.api.domain.LeavesLeftBasic;
+import com.hr.data.dao.DataFactory;
+import com.hr.data.dao.absence.AbsenceDataApi;
 import java.util.List;
 
 public class AbsenceModel {
 
-    private AbsenceDAO abDAO;
+    private AbsenceDataApi abDataApi;
 
-    {
-        abDAO = new AbsenceDAO();
-    }
+    { abDataApi = DataFactory.getInstanceAbsenceDataAPI(); }
     
-    public List<Employee> getLeavesLeft() {
-        List<Employee> leavesLeftByEmpId = abDAO.getLeavesLeftByEmpId();
+    public List<LeavesLeftBasic> getLeavesLeft(int empId) {
+        List<LeavesLeftBasic> leavesLeftByEmpId = abDataApi.getLeavesLeftByEmpId(empId);
         return leavesLeftByEmpId;
     }
 }

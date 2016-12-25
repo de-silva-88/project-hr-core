@@ -12,13 +12,40 @@
         <artifactId>project-hr</artifactId>
         <version>1.0</version>
     </parent>
+    <profiles>
+        <profile>
+            <id>skipGen</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <!--<goal>generate</goal>-->
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>com.hr.api</groupId>
             <artifactId>project-hr-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        
+        <dependency>
+            <groupId>com.hr.data</groupId>
+            <artifactId>project-hr-data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!--Jersey dependencies--> 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
