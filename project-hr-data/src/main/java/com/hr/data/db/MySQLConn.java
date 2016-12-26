@@ -1,5 +1,6 @@
 package com.hr.data.db;
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,14 +12,18 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MySQLConn implements Closeable {
+
     private Connection connection;
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hrdb_shared", "root", "root");
+//            Class.forName("com.mysql.jdbc.Driver").newInstance();
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hrdb_shared", "root", "root");
+            HikariDataSource dataSource = MySQLDataSourceHikari.getDataSource();
+            log.info("Getting conneciton from datasource..");
+            connection = dataSource.getConnection();
             return connection;
-        } catch (SQLException | InstantiationException | ClassNotFoundException | IllegalAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace(); // for tutorial's sake ;)
         }
         return null;

@@ -37,6 +37,7 @@
         <slf4j.version>1.7.21</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
         <mysql.version>5.1.30</mysql.version>
+        <jooq.version>3.8.4</jooq.version>
         <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
         <gen.sources.dir>target/generated-sources/java</gen.sources.dir>
         <jooq.pkg>com.hr.jooq</jooq.pkg>
@@ -47,12 +48,12 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq</artifactId>
-                <version>3.3.2</version>
+                <version>${jooq.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen</artifactId>
-                <version>3.3.2</version>
+                <version>${jooq.version}</version>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
@@ -135,23 +136,14 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>3.1.0</version>
             </dependency>
+            <!-- hikari cp ds -->
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>2.5.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies> 
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-codegen</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-    </dependencies> 
 
     <build>
         <pluginManagement>

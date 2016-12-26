@@ -12,7 +12,7 @@
         <artifactId>project-hr</artifactId>
         <version>1.0</version>
     </parent>
-    <profiles>
+<!--    <profiles>
         <profile>
             <id>skipGen</id>
             <activation>
@@ -26,7 +26,7 @@
                         <executions>
                             <execution>
                                 <goals>
-                                    <!--<goal>generate</goal>-->
+                                    <goal>generate</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -34,7 +34,7 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
+    </profiles>-->
     <dependencies>
         <dependency>
             <groupId>com.hr.api</groupId>
@@ -102,24 +102,21 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
         
-        <!-- jooq and mysql connector -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-            <version>3.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-codegen</artifactId>
-            <version>3.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
     </dependencies>
     <build>
         <finalName>project-hr-service</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--<goal>generate</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

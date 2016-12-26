@@ -11,8 +11,6 @@ import static com.hr.jooq.tables.AppliedLeaveStatus.APPLIED_LEAVE_STATUS;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
