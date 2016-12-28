@@ -1,18 +1,28 @@
 package com.hr.service.absence;
 
-import com.hr.tables.pojos.Employee;
+import com.hr.api.domain.LeavesAppliedBasic;
+import com.hr.api.domain.LeavesLeftBasic;
+import com.hr.data.dao.DataFactory;
+import com.hr.data.dao.absence.AbsenceDataApi;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AbsenceModel {
 
-    private AbsenceDAO abDAO;
+    private AbsenceDataApi abDataApi;
 
-    {
-        abDAO = new AbsenceDAO();
+    { abDataApi = DataFactory.getInstanceAbsenceDataAPI(); }
+    
+    public List<LeavesLeftBasic> getLeavesLeft(int empId) {
+        List<LeavesLeftBasic> leavesLeft = abDataApi.getLeavesLeftByEmpId(empId);
+        log.info("leaves left : {}", leavesLeft);
+        return leavesLeft;
     }
     
-    public List<Employee> getLeavesLeft() {
-        List<Employee> leavesLeftByEmpId = abDAO.getLeavesLeftByEmpId();
-        return leavesLeftByEmpId;
+    public List<LeavesAppliedBasic> getLeavesApplied(int empId) {
+        List<LeavesAppliedBasic> leavesApplied = abDataApi.getLeavesAppliedByEmpId(empId);
+        log.info("leaves applied : {}", leavesApplied);
+        return leavesApplied;
     }
 }

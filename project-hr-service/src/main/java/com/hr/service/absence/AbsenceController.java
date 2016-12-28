@@ -1,18 +1,25 @@
 package com.hr.service.absence;
 
-import com.hr.tables.pojos.Employee;
+import com.hr.api.domain.LeavesAppliedBasic;
+import com.hr.api.domain.LeavesLeftBasic;
+import com.hr.jooq.tables.pojos.Employee;
 import java.util.List;
 
 public class AbsenceController {
 
-    private AbsenceModel abMod;
+    private AbsenceModel model;
 
-    {
-        abMod = new AbsenceModel();
+    { model = new AbsenceModel(); }
+
+    public List<LeavesLeftBasic> getLeavesLeft(String empIdStr) {
+        int empId = Integer.parseInt(empIdStr);
+        List<LeavesLeftBasic> leavesLeft = model.getLeavesLeft(empId);
+        return leavesLeft;
     }
-
-    public List<Employee> getLeavesLeft() {
-        List<Employee> leavesLeftByEmpId = abMod.getLeavesLeft();
-        return leavesLeftByEmpId;
+    
+    public List<LeavesAppliedBasic> getLeavesApplied(String empIdStr) {
+        int empId = Integer.parseInt(empIdStr);
+        List<LeavesAppliedBasic> leavesApplied = model.getLeavesApplied(empId);
+        return leavesApplied;
     }
 }
