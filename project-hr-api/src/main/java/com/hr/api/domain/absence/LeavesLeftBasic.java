@@ -1,4 +1,4 @@
-package com.hr.api.domain;
+package com.hr.api.domain.absence;
 
 import java.math.BigDecimal;
 import lombok.Getter;

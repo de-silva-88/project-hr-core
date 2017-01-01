@@ -61,11 +61,15 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        
         <!-- hikari cp ds -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
+        <!-- cache : infinispan-embedded -->
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-embedded</artifactId>
+            </dependency>
     </dependencies>
 </project>
