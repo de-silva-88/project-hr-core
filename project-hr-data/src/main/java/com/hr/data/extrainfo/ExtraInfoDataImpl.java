@@ -1,30 +1,30 @@
-package com.hr.service.employee;
+package com.hr.data.extrainfo;
 
-import com.hr.service.dao.MySQLConn;
-import static com.hr.tables.AddressType.ADDRESS_TYPE;
-import static com.hr.tables.BloodGroup.BLOOD_GROUP;
-import static com.hr.tables.CivilStatus.CIVIL_STATUS;
-import static com.hr.tables.ContactType.CONTACT_TYPE;
-import static com.hr.tables.EduType.EDU_TYPE;
-import static com.hr.tables.EmpType.EMP_TYPE;
-import static com.hr.tables.Gender.GENDER;
-import static com.hr.tables.Nationality.NATIONALITY;
-import static com.hr.tables.Race.RACE;
-import static com.hr.tables.Religion.RELIGION;
-import static com.hr.tables.Title.TITLE;
-import static com.hr.tables.WorkingType.WORKING_TYPE;
-import com.hr.tables.pojos.AddressType;
-import com.hr.tables.pojos.BloodGroup;
-import com.hr.tables.pojos.CivilStatus;
-import com.hr.tables.pojos.ContactType;
-import com.hr.tables.pojos.EduType;
-import com.hr.tables.pojos.EmpType;
-import com.hr.tables.pojos.Gender;
-import com.hr.tables.pojos.Nationality;
-import com.hr.tables.pojos.Race;
-import com.hr.tables.pojos.Religion;
-import com.hr.tables.pojos.Title;
-import com.hr.tables.pojos.WorkingType;
+import com.hr.data.db.MySQLConn;
+import static com.hr.jooq.tables.AddressType.ADDRESS_TYPE;
+import static com.hr.jooq.tables.BloodGroup.BLOOD_GROUP;
+import static com.hr.jooq.tables.CivilStatus.CIVIL_STATUS;
+import static com.hr.jooq.tables.ContactType.CONTACT_TYPE;
+import static com.hr.jooq.tables.EduType.EDU_TYPE;
+import static com.hr.jooq.tables.EmpType.EMP_TYPE;
+import static com.hr.jooq.tables.Gender.GENDER;
+import static com.hr.jooq.tables.Nationality.NATIONALITY;
+import static com.hr.jooq.tables.Race.RACE;
+import static com.hr.jooq.tables.Religion.RELIGION;
+import static com.hr.jooq.tables.Title.TITLE;
+import static com.hr.jooq.tables.WorkingType.WORKING_TYPE;
+import com.hr.jooq.tables.pojos.AddressType;
+import com.hr.jooq.tables.pojos.BloodGroup;
+import com.hr.jooq.tables.pojos.CivilStatus;
+import com.hr.jooq.tables.pojos.ContactType;
+import com.hr.jooq.tables.pojos.EduType;
+import com.hr.jooq.tables.pojos.EmpType;
+import com.hr.jooq.tables.pojos.Gender;
+import com.hr.jooq.tables.pojos.Nationality;
+import com.hr.jooq.tables.pojos.Race;
+import com.hr.jooq.tables.pojos.Religion;
+import com.hr.jooq.tables.pojos.Title;
+import com.hr.jooq.tables.pojos.WorkingType;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +33,10 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 @Slf4j
-public class ExtraInfoDAO {
-    
-    public List<Gender> getGenderList(){
+public class ExtraInfoDataImpl implements ExtraInfoDataApi{
+
+    @Override
+    public List<Gender> getGenderList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<Gender> into = create.select(GENDER.GENDER_ID, GENDER.GENDER_NAME)
@@ -49,8 +50,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<Title> getTitleList(){
+
+    @Override
+    public List<Title> getTitleList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<Title> into = create.select(TITLE.TITLE_ID, TITLE.TITLE_NAME)
@@ -64,8 +66,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<BloodGroup> getBloodGroupList(){
+
+    @Override
+    public List<BloodGroup> getBloodGroupList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<BloodGroup> into = create.select(BLOOD_GROUP.BLOOD_GROUP_ID, BLOOD_GROUP.BLOOD_GROUP_NAME)
@@ -79,8 +82,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<Nationality> getNationalityList(){
+
+    @Override
+    public List<Nationality> getNationalityList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<Nationality> into = create.select(NATIONALITY.NATIONALITY_ID, NATIONALITY.NATIONALITY_NAME)
@@ -94,8 +98,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<Religion> getReligionList(){
+
+    @Override
+    public List<Religion> getReligionList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<Religion> into = create.select(RELIGION.RELIGION_ID, RELIGION.RELIGION_NAME)
@@ -109,8 +114,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<Race> getRaceList(){
+
+    @Override
+    public List<Race> getRaceList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<Race> into = create.select(RACE.RACE_ID, RACE.RACE_NAME)
@@ -124,8 +130,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<CivilStatus> getCivilStatusList(){
+
+    @Override
+    public List<CivilStatus> getCivilStatusList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<CivilStatus> into = create.select(CIVIL_STATUS.CIVIL_STATUS_ID, CIVIL_STATUS.CIVIL_STATUS_NAME)
@@ -139,8 +146,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<AddressType> getAddressTypeList(){
+
+    @Override
+    public List<AddressType> getAddressTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<AddressType> into = create.select(ADDRESS_TYPE.ID, ADDRESS_TYPE.ADDR_TYPE)
@@ -154,8 +162,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<ContactType> getContactTypeList(){
+
+    @Override
+    public List<ContactType> getContactTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<ContactType> into = create.select(CONTACT_TYPE.ID, CONTACT_TYPE.CONT_TYPE)
@@ -169,8 +178,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<EduType> getEduTypeList(){
+
+    @Override
+    public List<EduType> getEduTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<EduType> into = create.select(EDU_TYPE.ID, EDU_TYPE.EDU_TYPE_NAME)
@@ -184,8 +194,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<EmpType> getEmpTypeList(){
+
+    @Override
+    public List<EmpType> getEmpTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<EmpType> into = create.select(EMP_TYPE.EMP_TYPE_ID, EMP_TYPE.EMP_TYPE_NAME)
@@ -199,8 +210,9 @@ public class ExtraInfoDAO {
             return null;
         }
     }
-    
-    public List<WorkingType> getWorkingTypeList(){
+
+    @Override
+    public List<WorkingType> getWorkingTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
             DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
             List<WorkingType> into = create.select(WORKING_TYPE.WORKING_TYPE_ID, WORKING_TYPE.WORKING_TYPE_NAME)
@@ -214,4 +226,5 @@ public class ExtraInfoDAO {
             return null;
         }
     }
+    
 }
