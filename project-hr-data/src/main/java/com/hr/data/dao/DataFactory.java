@@ -2,6 +2,8 @@ package com.hr.data.dao;
 
 import com.hr.data.dao.absence.AbsenceDataApi;
 import com.hr.data.dao.absence.AbsenceDataImpl;
+import com.hr.data.dao.bank.BankDataApi;
+import com.hr.data.dao.bank.BankDataImpl;
 import com.hr.data.dao.company.CompanyDataApi;
 import com.hr.data.dao.company.CompanyDataImpl;
 import com.hr.data.dao.department.DepartmentDataApi;
@@ -51,5 +53,11 @@ public class DataFactory {
         log.info("Get instance of employee-data-api");
         EmployeeDataApi employeeDataApi = new EmployeeDataImpl();
         return employeeDataApi;
+    }
+    
+    public static BankDataApi getInstanceBankDataAPI(){
+        log.info("Get instance of employee-bank-data-api");
+        BankDataApi bankDataApi = new BankDataImpl();
+        return bankDataApi;
     }
 }

@@ -2,6 +2,7 @@ package com.hr.service.company;
 
 import com.hr.jooq.tables.pojos.Company;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Consumes(MediaType.APPLICATION_JSON)
 @Path("/company")
 public class CompanyResource {
     private CompanyController companyController;
@@ -31,6 +33,7 @@ public class CompanyResource {
     
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getCompanyById(@PathParam("id") String idStr){
         log.info("invoke get-company-by-id-service with param id --> {}", idStr);
         boolean validated = companyValidator.validateGetCompanyByIdService(idStr);

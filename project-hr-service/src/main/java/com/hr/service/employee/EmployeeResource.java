@@ -1,5 +1,7 @@
 package com.hr.service.employee;
 
+import com.hr.api.domain.EmployeeDetails;
+import com.hr.api.domain.EmployeePersonalDetails;
 import com.hr.jooq.tables.pojos.Employee;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -35,7 +37,7 @@ public class EmployeeResource {
         log.info("invoke load-employee-by-id service with param id --> {}", idStr);
         boolean validated = empValidator.validateEmployeeId(idStr);
         if(!validated) return Response.status(Response.Status.BAD_REQUEST).build();
-        List<Employee> empList = empController.getEmployee(idStr);
-        return Response.status(Response.Status.OK).entity(empList).build();
+        EmployeeDetails empData = empController.getEmployee(idStr);
+        return Response.status(Response.Status.OK).entity(empData).build();
     }
 }

@@ -2,7 +2,6 @@ package com.hr.service.absence;
 
 import com.hr.api.domain.LeavesAppliedBasic;
 import com.hr.api.domain.LeavesLeftBasic;
-import com.hr.jooq.tables.pojos.Employee;
 import java.util.List;
 
 public class AbsenceController {
