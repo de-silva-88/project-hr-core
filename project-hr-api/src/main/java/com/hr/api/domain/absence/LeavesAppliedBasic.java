@@ -1,4 +1,4 @@
-package com.hr.api.domain;
+package com.hr.api.domain.absence;
 
 import java.sql.Date;
 import lombok.Getter;

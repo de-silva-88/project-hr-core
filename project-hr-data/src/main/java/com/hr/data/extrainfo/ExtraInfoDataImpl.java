@@ -1,6 +1,7 @@
 package com.hr.data.extrainfo;
 
 import com.hr.data.db.MySQLConn;
+import com.hr.data.excetion.DataAccessException;
 import static com.hr.jooq.tables.AddressType.ADDRESS_TYPE;
 import static com.hr.jooq.tables.BloodGroup.BLOOD_GROUP;
 import static com.hr.jooq.tables.CivilStatus.CIVIL_STATUS;
@@ -29,8 +30,6 @@ import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 
 @Slf4j
 public class ExtraInfoDataImpl implements ExtraInfoDataApi{
@@ -38,15 +37,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<Gender> getGenderList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<Gender> into = create.select(GENDER.GENDER_ID, GENDER.GENDER_NAME)
                     .from(GENDER)
                     .where(GENDER.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(Gender.class);
             log.debug("Gender list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -54,15 +53,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<Title> getTitleList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<Title> into = create.select(TITLE.TITLE_ID, TITLE.TITLE_NAME)
                     .from(TITLE)
                     .where(TITLE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(Title.class);
             log.debug("Title list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -70,15 +69,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<BloodGroup> getBloodGroupList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<BloodGroup> into = create.select(BLOOD_GROUP.BLOOD_GROUP_ID, BLOOD_GROUP.BLOOD_GROUP_NAME)
                     .from(BLOOD_GROUP)
                     .where(BLOOD_GROUP.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(BloodGroup.class);
             log.debug("Blood group list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -86,15 +85,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<Nationality> getNationalityList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<Nationality> into = create.select(NATIONALITY.NATIONALITY_ID, NATIONALITY.NATIONALITY_NAME)
                     .from(NATIONALITY)
                     .where(NATIONALITY.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(Nationality.class);
             log.debug("Nationality list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -102,15 +101,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<Religion> getReligionList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<Religion> into = create.select(RELIGION.RELIGION_ID, RELIGION.RELIGION_NAME)
                     .from(RELIGION)
                     .where(RELIGION.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(Religion.class);
             log.debug("Religion list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -118,15 +117,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<Race> getRaceList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<Race> into = create.select(RACE.RACE_ID, RACE.RACE_NAME)
                     .from(RACE)
                     .where(RACE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(Race.class);
             log.debug("Race list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -134,15 +133,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<CivilStatus> getCivilStatusList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<CivilStatus> into = create.select(CIVIL_STATUS.CIVIL_STATUS_ID, CIVIL_STATUS.CIVIL_STATUS_NAME)
                     .from(CIVIL_STATUS)
                     .where(CIVIL_STATUS.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(CivilStatus.class);
             log.debug("CivilStatus list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -150,15 +149,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<AddressType> getAddressTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<AddressType> into = create.select(ADDRESS_TYPE.ID, ADDRESS_TYPE.ADDR_TYPE)
                     .from(ADDRESS_TYPE)
                     .where(ADDRESS_TYPE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(AddressType.class);
             log.debug("AddressType list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -166,15 +165,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<ContactType> getContactTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<ContactType> into = create.select(CONTACT_TYPE.ID, CONTACT_TYPE.CONT_TYPE)
                     .from(CONTACT_TYPE)
                     .where(CONTACT_TYPE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(ContactType.class);
             log.debug("ContactType list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -182,15 +181,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<EduType> getEduTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<EduType> into = create.select(EDU_TYPE.ID, EDU_TYPE.EDU_TYPE_NAME)
                     .from(EDU_TYPE)
                     .where(EDU_TYPE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(EduType.class);
             log.debug("EduType list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -198,15 +197,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<EmpType> getEmpTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<EmpType> into = create.select(EMP_TYPE.EMP_TYPE_ID, EMP_TYPE.EMP_TYPE_NAME)
                     .from(EMP_TYPE)
                     .where(EMP_TYPE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(EmpType.class);
             log.debug("EmpType list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -214,15 +213,15 @@ public class ExtraInfoDataImpl implements ExtraInfoDataApi{
     @Override
     public List<WorkingType> getWorkingTypeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<WorkingType> into = create.select(WORKING_TYPE.WORKING_TYPE_ID, WORKING_TYPE.WORKING_TYPE_NAME)
                     .from(WORKING_TYPE)
                     .where(WORKING_TYPE.IS_ACTIVE.eq(Byte.valueOf("1")))
                     .fetch().into(WorkingType.class);
             log.debug("WorkingType list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }

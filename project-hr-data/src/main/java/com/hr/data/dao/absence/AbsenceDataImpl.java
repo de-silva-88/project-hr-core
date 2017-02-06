@@ -1,20 +1,19 @@
 package com.hr.data.dao.absence;
 
-import com.hr.api.domain.LeavesAppliedBasic;
-import com.hr.api.domain.LeavesLeftBasic;
+import com.hr.api.domain.absence.ApplyLeaveInbound;
+import com.hr.api.domain.absence.LeavesAppliedBasic;
+import com.hr.api.domain.absence.LeavesLeftBasic;
 import com.hr.data.db.MySQLConn;
+import com.hr.data.excetion.DataAccessException;
 import static com.hr.jooq.tables.Employee.EMPLOYEE;
 import static com.hr.jooq.tables.LeavesApplied.LEAVES_APPLIED;
 import static com.hr.jooq.tables.LeavesLeft.LEAVES_LEFT;
 import static com.hr.jooq.tables.LeaveType.LEAVE_TYPE;
 import static com.hr.jooq.tables.AppliedLeaveStatus.APPLIED_LEAVE_STATUS;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 
 @Slf4j
 public class AbsenceDataImpl implements AbsenceDataApi {
@@ -22,7 +21,7 @@ public class AbsenceDataImpl implements AbsenceDataApi {
     @Override
     public List<LeavesLeftBasic> getLeavesLeftByEmpId(int empId) {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<LeavesLeftBasic> leavesList = create
                     .select(LEAVES_LEFT.EMP_ID, LEAVE_TYPE.TYPE, LEAVES_LEFT.LEAVES_LEFT_)
                     .from(LEAVES_LEFT)
@@ -34,8 +33,8 @@ public class AbsenceDataImpl implements AbsenceDataApi {
                     .fetch().into(LeavesLeftBasic.class);
             log.info("leaves list : {}", leavesList);
             return leavesList;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -43,8 +42,7 @@ public class AbsenceDataImpl implements AbsenceDataApi {
     @Override
     public List<LeavesAppliedBasic> getLeavesAppliedByEmpId(int empId) {
         try (MySQLConn mySQLConn = new MySQLConn()) {
-            Connection connection = mySQLConn.getConnection();
-            DSLContext create = DSL.using(connection, SQLDialect.MYSQL);
+            DSLContext create = mySQLConn.getDSLContext();
             List<LeavesAppliedBasic> result = create
                     .select(
                             LEAVES_APPLIED.APPLIED_ON, LEAVES_APPLIED.EMP_ID, LEAVES_APPLIED.LEAVE_FROM,
@@ -60,9 +58,27 @@ public class AbsenceDataImpl implements AbsenceDataApi {
                     )
                     .fetch().into(LeavesAppliedBasic.class);
             return result;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public int applyLeave(ApplyLeaveInbound applyLeaveInfo) {
+//        try(MySQLConn mysqlConn = new MySQLConn()) {
+//            DSLContext create = mysqlConn.getDSLContext();
+//            int executeResult = create.insertInto(LEAVES_APPLIED, LEAVES_APPLIED.EMP_ID,
+//                    LEAVES_APPLIED.LEAVE_TYPE, LEAVES_APPLIED.LEAVE_FROM, LEAVES_APPLIED.LEAVE_TO,
+//                    LEAVES_APPLIED.APPLIED_ON, LEAVES_APPLIED.IS_ACTIVE, LEAVES_APPLIED.STATUS)
+//                    .values(applyLeaveInfo.getEmployeeId(), applyLeaveInfo.getLeaveType(),
+//                            applyLeaveInfo.getLeaveFrom(), applyLeaveInfo.getLeaveTo(),
+//                            applyLeaveInfo.getAppliedOn(), (byte) 1, 1)
+//                    .execute();
+//            return executeResult;
+//        } catch (IOException | DataAccessException ex) {
+//            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with value -1. Message : {}", ex.getMessage());
+            return -1;
+//        }
     }
 }

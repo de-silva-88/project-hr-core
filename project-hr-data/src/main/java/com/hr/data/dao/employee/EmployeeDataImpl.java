@@ -3,6 +3,7 @@ package com.hr.data.dao.employee;
 import com.hr.api.domain.EmployeePersonalDetails;
 import com.hr.api.domain.EmployeeWork;
 import com.hr.data.db.MySQLConn;
+import com.hr.data.excetion.DataAccessException;
 import static com.hr.jooq.Tables.COLLAR_SIZE;
 import static com.hr.jooq.tables.BloodGroup.BLOOD_GROUP;
 import static com.hr.jooq.tables.CivilStatus.CIVIL_STATUS;
@@ -26,8 +27,6 @@ import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 
 @Slf4j
 public class EmployeeDataImpl implements EmployeeDataApi{
@@ -35,15 +34,15 @@ public class EmployeeDataImpl implements EmployeeDataApi{
     @Override
     public List<Employee> getEmployeeList() {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<Employee> into = create.select(EMPLOYEE.ID, EMPLOYEE.FIRST_NAME, EMPLOYEE.LAST_NAME, EMPLOYEE.FULL_NAME)
                     .from(EMPLOYEE)
                     .where(EMPLOYEE.EMP_STATUS.eq(1))
                     .fetch().into(Employee.class);
             log.info("Employee list : {}", into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -51,7 +50,7 @@ public class EmployeeDataImpl implements EmployeeDataApi{
     @Override
     public List<EmployeePersonalDetails> getEmpPersonalDetailsById(int empId) {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<EmployeePersonalDetails> into = create.select(EMPLOYEE.ID, EMPLOYEE.CARD_NUMBER, GENDER.GENDER_NAME.as("gender"), 
                     TITLE.TITLE_NAME.as("title"), EMPLOYEE.INITIALS, EMPLOYEE.FIRST_NAME, EMPLOYEE.LAST_NAME, 
                     EMPLOYEE.FULL_NAME, EMPLOYEE.NIC_NAME, EMPLOYEE.DOB, EMPLOYEE.NIC, CIVIL_STATUS.CIVIL_STATUS_NAME.as("civil_status"), 
@@ -65,7 +64,7 @@ public class EmployeeDataImpl implements EmployeeDataApi{
                     .leftOuterJoin(RELIGION).on(EMPLOYEE.RELIGION_ID.eq(RELIGION.RELIGION_ID))
                     .leftOuterJoin(RACE).on(EMPLOYEE.RACE_ID.eq(EMPLOYEE.RACE_ID))
                     .leftOuterJoin(NATIONALITY).on(EMPLOYEE.NATIONALITY_ID.eq(NATIONALITY.NATIONALITY_ID))
-                    .leftOuterJoin(BLOOD_GROUP).on(EMPLOYEE.BLOOD_GROUP.eq(BLOOD_GROUP.BLOOD_GROUP_ID))
+                    .leftOuterJoin(BLOOD_GROUP).on(EMPLOYEE.BLOOD_GROUP_ID.eq(BLOOD_GROUP.BLOOD_GROUP_ID))
                     .leftOuterJoin(COLLAR_SIZE).on(EMPLOYEE.COLLAR_SIZE_ID.eq(COLLAR_SIZE.ID))
                     .leftOuterJoin(TSHIRT_SIZE).on(EMPLOYEE.TSHIRT_SIZE_ID.eq(TSHIRT_SIZE.ID))
                     .where(EMPLOYEE.EMP_STATUS.eq(1)
@@ -73,8 +72,8 @@ public class EmployeeDataImpl implements EmployeeDataApi{
                     .fetch().into(EmployeePersonalDetails.class);
             log.info("Employee personal for emp id {} : {}", empId, into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
@@ -82,7 +81,7 @@ public class EmployeeDataImpl implements EmployeeDataApi{
     @Override
     public List<EmployeeWork> getEmpWorkDetailsById(int empId) {
         try (MySQLConn mysqlConn = new MySQLConn()) {
-            DSLContext create = DSL.using(mysqlConn.getConnection(), SQLDialect.MYSQL);
+            DSLContext create = mysqlConn.getDSLContext();
             List<EmployeeWork> into = create.select(COMPANY.COMPANY_NAME.as("company"), DEPARTMENT.DEPARTMENT_NAME.as("department"), 
                     SECTION.SECTION_NAME.as("section"), LOCATION.LOCATION_NAME.as("location"), EMP_TYPE.EMP_TYPE_NAME.as("emp_type"), 
                     EMP_TYPE.EMP_TYPE_NAME.as("emp_type"), WORKING_TYPE.WORKING_TYPE_NAME.as("working_type"), 
@@ -101,8 +100,8 @@ public class EmployeeDataImpl implements EmployeeDataApi{
                     .fetch().into(EmployeeWork.class);
             log.info("Employee working details for emp id {} : {}", empId, into);
             return into;
-        } catch (IOException ex) {
-            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null.");
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with null. Message : {}", ex.getMessage());
             return null;
         }
     }
