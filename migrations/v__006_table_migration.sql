@@ -169,6 +169,3 @@ updated_by INT NULL,
 updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 alter table employee change collar_size collar_size_id int not null; 
 alter table employee change national_id nationality_id int not null; 
-
-insert into gender(gender_name, created_by) values("Male", 1);
-insert into gender(gender_name, created_by) values("Female", 1);

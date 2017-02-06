@@ -1,3 +1,6 @@
+insert into gender(gender_name, created_by) values("Male", 1);
+insert into gender(gender_name, created_by) values("Female", 1);
+
 insert into religion(religion_name) values("Islam");
 insert into religion(religion_name) values("Christianity");
 insert into religion(religion_name) values("Hinduism");
