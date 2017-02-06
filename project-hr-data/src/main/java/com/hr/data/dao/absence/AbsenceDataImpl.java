@@ -66,19 +66,19 @@ public class AbsenceDataImpl implements AbsenceDataApi {
 
     @Override
     public int applyLeave(ApplyLeaveInbound applyLeaveInfo) {
-//        try(MySQLConn mysqlConn = new MySQLConn()) {
-//            DSLContext create = mysqlConn.getDSLContext();
-//            int executeResult = create.insertInto(LEAVES_APPLIED, LEAVES_APPLIED.EMP_ID,
-//                    LEAVES_APPLIED.LEAVE_TYPE, LEAVES_APPLIED.LEAVE_FROM, LEAVES_APPLIED.LEAVE_TO,
-//                    LEAVES_APPLIED.APPLIED_ON, LEAVES_APPLIED.IS_ACTIVE, LEAVES_APPLIED.STATUS)
-//                    .values(applyLeaveInfo.getEmployeeId(), applyLeaveInfo.getLeaveType(),
-//                            applyLeaveInfo.getLeaveFrom(), applyLeaveInfo.getLeaveTo(),
-//                            applyLeaveInfo.getAppliedOn(), (byte) 1, 1)
-//                    .execute();
-//            return executeResult;
-//        } catch (IOException | DataAccessException ex) {
-//            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with value -1. Message : {}", ex.getMessage());
+        try(MySQLConn mysqlConn = new MySQLConn()) {
+            DSLContext create = mysqlConn.getDSLContext();
+            int executeResult = create.insertInto(LEAVES_APPLIED, LEAVES_APPLIED.EMP_ID,
+                    LEAVES_APPLIED.LEAVE_TYPE, LEAVES_APPLIED.LEAVE_FROM, LEAVES_APPLIED.LEAVE_TO,
+                    LEAVES_APPLIED.APPLIED_ON, LEAVES_APPLIED.IS_ACTIVE, LEAVES_APPLIED.STATUS)
+                    .values(applyLeaveInfo.getEmployeeId(), applyLeaveInfo.getLeaveType(),
+                            applyLeaveInfo.getLeaveFrom(), applyLeaveInfo.getLeaveTo(),
+                            applyLeaveInfo.getAppliedOn(), (byte) 1, 1)
+                    .execute();
+            return executeResult;
+        } catch (IOException | DataAccessException ex) {
+            log.error("Error getting mysql conneciton. Db operation terminated. Exiting with value -1. Message : {}", ex.getMessage());
             return -1;
-//        }
+        }
     }
 }
